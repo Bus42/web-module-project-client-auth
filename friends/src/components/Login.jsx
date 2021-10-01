@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchFriendData } from "../actions/friendActions";
+import { login } from "../actions/authActions";
 
 const Login = (props) => {
   const initialFormValues = {
@@ -10,7 +10,7 @@ const Login = (props) => {
     password: "",
   };
 
-  const fetchFriendData = props.fetchFriendData;
+  const login = props.login;
 
   const [formValues, setFormValues] = useState(initialFormValues);
   const { push } = useHistory();
@@ -28,11 +28,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit called");
-    fetchFriendData({
-      method: "post",
-      endpoint: "/login",
-      body: formValues,
-    });
+    login(formValues);
     setFormValues(initialFormValues);
     push("/friendslist");
   };
@@ -63,4 +59,4 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { fetchFriendData })(Login);
+export default connect(null, { login })(Login);
