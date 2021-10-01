@@ -16,8 +16,14 @@ const Login = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.table(formValues)
+    // post to API
+  };
+
   return (
-    <form action="submit">
+    <form action="submit" onSubmit={handleSubmit} >
       <label htmlFor="username">
         <input
           name="username"
@@ -36,6 +42,8 @@ const Login = () => {
           placeholder="password"
         />
       </label>
+      <button type="submit">log in</button>
+      <button disabled>sign up</button>
     </form>
   );
 };
