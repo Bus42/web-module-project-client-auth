@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.group("%clogging in", 'color: #007aaf')
+    console.groupCollapsed("%clogging in", 'color: #007aaf')
     console.log("%ccredentials:", "color: yellow")
     console.table(formValues)
     // post to API
