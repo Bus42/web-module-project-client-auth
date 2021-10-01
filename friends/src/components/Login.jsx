@@ -1,21 +1,21 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import axios from "axios";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { fetchFriendData } from "../actions/friendActions";
 
-const BASE_URL = "http://localhost:5000/api";
+const Login = (props) => {
+  const initialFormValues = {
+    username: "",
+    password: "",
+  };
 
+  const fetchFriendData = props.fetchFriendData;
 
-localStorage.setItem('test', 'test')
-const Login = () => {
-    const initialFormValues = {
-        username: "",
-        password: "",
-    };
-    
-    const [formValues, setFormValues] = useState(initialFormValues);
-    const [token, setToken] = useLocalStorage('token');
-    const [name, setName] = useLocalStorage('username');
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const { push } = useHistory();
+  // const [token, setToken] = useLocalStorage("token");
+  // const [name, setName] = useLocalStorage("username");
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -25,26 +25,16 @@ const Login = () => {
     });
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.groupCollapsed("%clogging in", 'color: #007aaf')
-    console.log("%ccredentials:", "color: yellow")
-    console.table(formValues)
-    // post to API
-    axios
-      .post(`${BASE_URL}/login`, formValues)
-      .then((res) => {
-          console.log('%ctoken recieved: ', 'color: green', res.data.payload)
-          setToken(res.data.payload)
-          setName(formValues.username)
-      })
-      .catch((err) => console.error(err))
-      .finally(() => {
-        setFormValues(initialFormValues);
-      });
-    console.groupEnd("logging in")
+    console.log("handleSubmit called");
+    fetchFriendData({
+      method: "post",
+      endpoint: "/login",
+      body: formValues,
+    });
+    setFormValues(initialFormValues);
+    push("/friendslist");
   };
 
   return (
@@ -73,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, { fetchFriendData })(Login);
