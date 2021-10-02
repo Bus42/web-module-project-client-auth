@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import { Route, Switch, Redirect } from "react-router-dom";
 import FriendsList from "./components/FriendsList";
 import Header from "./components/Header";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -12,9 +13,7 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/friendslist">
-          <FriendsList />
-        </Route>
+        <PrivateRoute component={FriendsList} path="/friendslist" exact />
         <Route path="/">
           <Redirect from="/" to="/login" />
         </Route>

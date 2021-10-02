@@ -13,9 +13,7 @@ const Login = (props) => {
   const login = props.login;
 
   const [formValues, setFormValues] = useState(initialFormValues);
-  const { push } = useHistory();
-  // const [token, setToken] = useLocalStorage("token");
-  // const [name, setName] = useLocalStorage("username");
+  const {push} = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -30,7 +28,7 @@ const Login = (props) => {
     console.log("handleSubmit called");
     login(formValues);
     setFormValues(initialFormValues);
-    push("/friendslist");
+    push('./friendslist')
   };
 
   return (
