@@ -26,14 +26,10 @@ export const authError = (message) => {
 };
 
 export const login = (credentials) => (dispatch) => {
-  axios.defaults.url = BASE_URL;
-  console.log("login called");
   dispatch(authLoading());
   axios
     .post(`${BASE_URL}/login`, credentials)
-    .then(({ data }) => {
-      dispatch(authSuccess(data));
-    })
+    .then((res) => dispatch(authSuccess(res.data.payload)))
     .catch(({ message }) => {
       dispatch(authError(message));
     });
