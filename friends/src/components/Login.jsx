@@ -26,8 +26,7 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     login(formValues);
-    setFormValues(initialFormValues);
-    push("./friendslist");
+    push('/friendslist')
   };
 
   return (
@@ -51,7 +50,6 @@ const Login = (props) => {
         />
       </label>
       <button type="submit">log in</button>
-      <button disabled>sign up</button>
     </form>
   );
 };

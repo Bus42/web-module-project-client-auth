@@ -34,7 +34,9 @@ export const login = (credentials) => (dispatch) => {
   dispatch(authLoading());
   axios
     .post(`${BASE_URL}/login`, credentials)
-    .then((res) => dispatch(authSuccess(res.data.payload)))
+    .then((res) => {
+      dispatch(authSuccess(res.data.payload))
+    })
     .catch(({ message }) => {
       dispatch(authError(message));
     });
