@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import FriendsList from "./components/FriendsList";
 import AddFriend from "./components/AddFriend";
+import FriendDetail from "./components/FriendDetail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         </Route>
         <PrivateRoute component={FriendsList} path="/friendslist" exact />
         <PrivateRoute component={AddFriend} path="/addfriend" exact />
+        <PrivateRoute component={FriendDetail} path="/frienddetail/:id" exact />
         <Route path="*">
           <Redirect to="/login" />
         </Route>

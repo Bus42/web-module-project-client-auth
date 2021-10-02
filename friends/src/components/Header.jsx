@@ -7,7 +7,6 @@ const Header = (props) => {
   const { isAuthenticated, logout } = props;
   const { push, goBack } = useHistory();
   const location = useLocation();
-  console.log(location.pathname);
 
   const handleLogoutClick = () => {
     if (window.confirm("Are you sure you wish to end your session?")) {

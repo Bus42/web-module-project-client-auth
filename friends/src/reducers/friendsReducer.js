@@ -3,12 +3,14 @@ import {
   FRIENDS_SUCCESS,
   FRIENDS_ERROR,
   ADD_FRIEND_SUCCESS,
+  FRIEND_DETAIL_SUCCESS,
 } from "../actions/friendsActions";
 
 const initialState = {
   loading: false,
   friends: [],
   error: null,
+  activeFriend: {name: '', age: '', id: '', email: ''}
 };
 
 const friendsReducer = (state = initialState, action) => {
@@ -34,7 +36,13 @@ const friendsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        friends: [...state.friends, { ...action.payload, id: Date.now() }],
+        friends: [...state.friends, action.payload],
+      };
+    case FRIEND_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        activeFriend: action.payload,
       };
     default:
       return state;

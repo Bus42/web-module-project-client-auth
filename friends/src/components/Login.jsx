@@ -13,7 +13,7 @@ const Login = (props) => {
   const login = props.login;
 
   const [formValues, setFormValues] = useState(initialFormValues);
-  const {push} = useHistory();
+  const { push } = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -25,10 +25,9 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handleSubmit called");
     login(formValues);
     setFormValues(initialFormValues);
-    push('./friendslist')
+    push("./friendslist");
   };
 
   return (

@@ -1,9 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getFriendDetail } from "../actions/friendsActions";
+import { useHistory } from "react-router-dom";
+
 const Friend = (props) => {
-  const { age, email, id, name } = props;
+  const { age, email, id, name } = props.friend;
+  const { push } = useHistory();
 
   const handleClick = () => {
-    // * **[GET]** to `/api/friends/123`: returns the friend with the id passed as part of the URL (123 in example).
+    push(`/frienddetail/${id}`);
   };
 
   return (
@@ -11,11 +16,9 @@ const Friend = (props) => {
       <h3>{name}</h3>
       <p>age: {age}</p>
       <p>email: {email}</p>
-      <button disabled onClick={handleClick}>
-        Details
-      </button>
+      <button onClick={handleClick}>Details</button>
     </div>
   );
 };
 
-export default Friend;
+export default connect(null, { getFriendDetail })(Friend);

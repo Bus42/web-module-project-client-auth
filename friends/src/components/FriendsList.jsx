@@ -18,9 +18,7 @@ const FriendsList = (props) => {
       {friends &&
         friends.map((friend) => (
           <Friend
-            name={friend.name}
-            age={friend.age}
-            email={friend.email}
+            friend={friend}
             key={friend.id}
           />
         ))}
