@@ -44,7 +44,7 @@ export const logout = () => dispatch => {
     dispatch(authLoading);
     axios.post(`${BASE_URL}/logout`)
     .then(() => {
-        window.localStorage.setItem('token', '')
+        window.localStorage.removeItem('token');
     })
     .catch(({message}) => {
         dispatch(authError(message))
