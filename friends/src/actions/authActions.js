@@ -4,6 +4,7 @@ import { BASE_URL } from "../data";
 export const AUTH_LOADING = "AUTH_LOADING";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_ERROR = "AUTH_ERROR";
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 export const authLoading = () => {
   return {
@@ -25,6 +26,10 @@ export const authError = (message) => {
   };
 };
 
+export const logoutSuccess = () => {
+    return ({ type: LOGOUT_SUCCESS })
+}
+
 export const login = (credentials) => (dispatch) => {
   dispatch(authLoading());
   axios
@@ -34,3 +39,17 @@ export const login = (credentials) => (dispatch) => {
       dispatch(authError(message));
     });
 };
+
+export const logout = () => dispatch => {
+    dispatch(authLoading);
+    axios.post(`${BASE_URL}/logout`)
+    .then(() => {
+        window.localStorage.setItem('token', '')
+    })
+    .catch(({message}) => {
+        dispatch(authError(message))
+    })
+    .finally(() => {
+        window.location = "/login"
+    })
+}

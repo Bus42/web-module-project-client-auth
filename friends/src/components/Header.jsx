@@ -1,10 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import { logout } from "../actions/authActions";
 
 const Header = (props) => {
-  const { isAuthenticated } = props;
+  const { isAuthenticated, logout } = props;
   const handleClick = () => {
-    console.log("logout clicked");
+    if (window.confirm("Are you sure you wish to end your session?")) {
+      logout();
+    }
   };
   return (
     <header>
@@ -20,4 +23,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { logout })(Header);
