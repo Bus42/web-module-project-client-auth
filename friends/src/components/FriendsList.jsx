@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getFriends } from "../actions/friendsActions";
 import Loading from "../components/Loading";
 import Friend from "./Friend";
 
 const FriendsList = (props) => {
-  const [gotFriends, setGotFriends] = useState(false);
   const { loading, friends, error, getFriends } = props;
 
   useEffect(() => {
-    if (!gotFriends) {
-      getFriends();
-      setGotFriends(true);
-    }
-  }, [gotFriends, getFriends]);
+    getFriends();
+  }, [getFriends]);
 
   return (
     <div>
@@ -34,7 +30,6 @@ const FriendsList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     loading: state.friendsReducer.loading,
     friends: state.friendsReducer.friends,
