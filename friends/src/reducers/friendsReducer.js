@@ -2,6 +2,7 @@ import {
   FRIENDS_LOADING,
   FRIENDS_SUCCESS,
   FRIENDS_ERROR,
+  ADD_FRIEND_SUCCESS,
 } from "../actions/friendsActions";
 
 const initialState = {
@@ -29,7 +30,12 @@ const friendsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
-
+    case ADD_FRIEND_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        friends: [...state.friends, { ...action.payload, id: Date.now() }],
+      };
     default:
       return state;
   }
