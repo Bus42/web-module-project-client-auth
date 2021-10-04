@@ -42,11 +42,9 @@ export const friendDetailSuccess = (friend) => {
 
 export const getFriends = () => (dispatch) => {
   dispatch(friendsLoading());
-  const token = window.localStorage.getItem("token");
   axiosWithAuth({
     method: "get",
-    url: `${BASE_URL}/friends`,
-    headers: { authorization: token },
+    endpoint: "/friends",
   })
     .then(({ data }) => {
       dispatch(friendsSuccess(data));
