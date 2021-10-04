@@ -1,5 +1,3 @@
-import axios from "axios";
-import { BASE_URL } from "../data";
 import axiosWithAuth from "../helpers/axiosWithAuth";
 
 export const AUTH_LOADING = "AUTH_LOADING";
@@ -33,9 +31,13 @@ export const logoutSuccess = () => {
 
 export const login = (credentials) => (dispatch) => {
   dispatch(authLoading());
-  axios
-    .post(`${BASE_URL}/login`, credentials)
+  axiosWithAuth({
+    method: "post",
+    endpoint: "/login",
+    body: credentials,
+  })
     .then(({ data }) => {
+      // move logic from here to .then block in login component
       window.localStorage.setItem("token", data.payload);
       dispatch(authSuccess(data.payload));
       window.location = "/friendslist";
