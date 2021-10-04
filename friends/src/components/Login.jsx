@@ -10,7 +10,7 @@ const Login = (props) => {
     password: "",
   };
 
-  const { loading, login } = props;
+  const { loading, login, errors } = props;
 
   const [formValues, setFormValues] = useState(initialFormValues);
 
@@ -32,27 +32,36 @@ const Login = (props) => {
       {loading ? (
         <Loading />
       ) : (
-        <form action="submit" onSubmit={handleSubmit}>
-          <label htmlFor="username">
-            <input
-              name="username"
-              type="text"
-              value={formValues.username}
-              onChange={handleChange}
-              placeholder="username"
-            />
-          </label>
-          <label htmlFor="password">
-            <input
-              name="password"
-              type="password"
-              value={formValues.password}
-              onChange={handleChange}
-              placeholder="password"
-            />
-          </label>
-          <button type="submit">log in</button>
-        </form>
+        <>
+          {errors && (
+            <div className="errors">
+              {errors.map((error) => (
+                <div className="error">{error}</div>
+              ))}
+            </div>
+          )}
+          <form action="submit" onSubmit={handleSubmit}>
+            <label htmlFor="username">
+              <input
+                name="username"
+                type="text"
+                value={formValues.username}
+                onChange={handleChange}
+                placeholder="username"
+              />
+            </label>
+            <label htmlFor="password">
+              <input
+                name="password"
+                type="password"
+                value={formValues.password}
+                onChange={handleChange}
+                placeholder="password"
+              />
+            </label>
+            <button type="submit">log in</button>
+          </form>
+        </>
       )}
     </>
   );
@@ -61,6 +70,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
+    errors: state.authReducer.errors,
   };
 };
 
