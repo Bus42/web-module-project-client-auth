@@ -8,7 +8,7 @@ import {
 const initialState = {
   loading: false,
   isAuthenticated: false,
-  errors: null,
+  errors: [],
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,11 +23,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isAuthenticated: true,
+        errors: initialState.errors,
       };
     case AUTH_ERROR:
       return {
         ...state,
-        errors: action.payload,
+        errors: [...state.errors, action.payload],
       };
     case LOGOUT_SUCCESS:
       return initialState;
