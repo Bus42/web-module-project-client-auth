@@ -74,7 +74,6 @@ export const getFriendDetail = (id) => (dispatch) => {
     endpoint: `/friends/${id}`,
   })
     .then(({ data }) => {
-      console.log(data);
       dispatch(friendDetailSuccess(data));
     })
     .catch(({ message }) => {
