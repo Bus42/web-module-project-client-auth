@@ -56,9 +56,11 @@ export const getFriends = () => (dispatch) => {
 
 export const addFriend = (friend) => (dispatch) => {
   dispatch(friendsLoading());
-  const token = window.localStorage.getItem("token");
-  axios
-    .post(`${BASE_URL}/friends`, friend, { headers: { authorization: token } })
+  axiosWithAuth({
+    method: "post",
+    endpoint: "/friends",
+    body: friend,
+  })
     .then(({ data }) => {
       dispatch(friendsSuccess(data));
     })
@@ -69,9 +71,10 @@ export const addFriend = (friend) => (dispatch) => {
 
 export const getFriendDetail = (id) => (dispatch) => {
   dispatch(friendsLoading());
-  const token = window.localStorage.getItem("token");
-  axios
-    .get(`${BASE_URL}/friends/${id}`, { headers: { authorization: token } })
+  axiosWithAuth({
+    method: "get",
+    endpoint: `/friends/${id}`,
+  })
     .then(({ data }) => {
       console.log(data);
       dispatch(friendDetailSuccess(data));
