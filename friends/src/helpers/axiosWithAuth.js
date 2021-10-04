@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../data";
 
-const AUTH_TOKEN = window.localStorage.getItem("token");
+const AUTH_TOKEN = window.localStorage.getItem("token") || null;
 
 const instance = axios.create({
   baseURL: BASE_URL,
