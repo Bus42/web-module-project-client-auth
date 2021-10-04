@@ -1,5 +1,3 @@
-import axios from "axios";
-import { BASE_URL } from "../data";
 import axiosWithAuth from "../helpers/axiosWithAuth";
 
 export const FRIENDS_LOADING = "LOADING";
