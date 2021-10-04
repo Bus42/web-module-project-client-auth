@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../data";
+import axiosWithAuth from "../helpers/axiosWithAuth";
 
 export const FRIENDS_LOADING = "LOADING";
 export const FRIENDS_SUCCESS = "FRIENDS_SUCCESS";
@@ -42,14 +43,17 @@ export const friendDetailSuccess = (friend) => {
 export const getFriends = () => (dispatch) => {
   dispatch(friendsLoading());
   const token = window.localStorage.getItem("token");
-  axios
-    .get(`${BASE_URL}/friends`, { headers: { authorization: token } })
+  axiosWithAuth({
+    method: "get",
+    url: `${BASE_URL}/friends`,
+    headers: { authorization: token },
+  })
     .then(({ data }) => {
       dispatch(friendsSuccess(data));
     })
     .catch(({ message }) => {
       dispatch(friendsError(message));
-    })
+    });
 };
 
 export const addFriend = (friend) => (dispatch) => {
@@ -62,7 +66,7 @@ export const addFriend = (friend) => (dispatch) => {
     })
     .catch(({ message }) => {
       dispatch(friendsError(message));
-    })
+    });
 };
 
 export const getFriendDetail = (id) => (dispatch) => {
@@ -71,10 +75,10 @@ export const getFriendDetail = (id) => (dispatch) => {
   axios
     .get(`${BASE_URL}/friends/${id}`, { headers: { authorization: token } })
     .then(({ data }) => {
-      console.log(data)
+      console.log(data);
       dispatch(friendDetailSuccess(data));
     })
     .catch(({ message }) => {
       dispatch(friendsError(message));
-    })
+    });
 };

@@ -1,15 +1,23 @@
 import axios from "axios";
-import { BASE_URL } from "../data";
-axios.defaults.url = BASE_URL;
 
-const axiosWithAuth = ({ method, endpoint, body = null, headers = null }) => {
+const axiosWithAuth = ({ method, url, body = null, headers = {} }) => {
   const token = window.localStorage.getItem("token");
 
-  axios[method](endpoint, body, {
-    headers: { ...headers, authorization: token },
-  })
-  .then(res => res)
-  .catch(err => err)
+  return method === "get"
+    ? new Promise((resolve, reject) => {
+        axios[method](url, {
+          headers: { ...headers, authorization: token },
+        })
+          .then((res) => resolve(res))
+          .catch((err) => reject(err));
+      })
+    : new Promise((resolve, reject) => {
+        axios[method](url, body, {
+          headers: { ...headers, authorization: token },
+        })
+          .then((res) => resolve(res))
+          .catch((err) => reject(err));
+      });
 };
 
 export default axiosWithAuth;
