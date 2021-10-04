@@ -4,7 +4,7 @@ import { BASE_URL } from "../data";
 export const AUTH_LOADING = "AUTH_LOADING";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
 export const authLoading = () => {
   return {
@@ -27,31 +27,33 @@ export const authError = (message) => {
 };
 
 export const logoutSuccess = () => {
-    return ({ type: LOGOUT_SUCCESS })
-}
+  return { type: LOGOUT_SUCCESS };
+};
 
 export const login = (credentials) => (dispatch) => {
   dispatch(authLoading());
   axios
     .post(`${BASE_URL}/login`, credentials)
-    .then((res) => {
-      dispatch(authSuccess(res.data.payload))
+    .then(({data}) => {
+      window.localStorage.setItem("token", data.payload);
+      dispatch(authSuccess(data.payload));
+      window.location = ("/friendslist")
+    })
+    .catch(({ message }) => {
+      dispatch(authError(message));
+    })
+};
+
+export const logout = () => (dispatch) => {
+  const token = window.localStorage.getItem("token");
+  axios
+    .post(`${BASE_URL}/logout`,null, { headers: { authorization: token } })
+    .then(() => {
+      window.localStorage.removeItem("token");
+      dispatch(logoutSuccess());
+      window.location = "/login";
     })
     .catch(({ message }) => {
       dispatch(authError(message));
     });
 };
-
-export const logout = () => dispatch => {
-    dispatch(authLoading);
-    axios.post(`${BASE_URL}/logout`)
-    .then(() => {
-        window.localStorage.removeItem('token');
-    })
-    .catch(({message}) => {
-        dispatch(authError(message))
-    })
-    .finally(() => {
-        window.location = "/login"
-    })
-}

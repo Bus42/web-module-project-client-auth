@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../actions/authActions";
+import Loading from "./Loading";
 
 const Login = (props) => {
   const initialFormValues = {
@@ -10,10 +10,9 @@ const Login = (props) => {
     password: "",
   };
 
-  const login = props.login;
+  const { loading, login } = props;
 
   const [formValues, setFormValues] = useState(initialFormValues);
-  const { push } = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -26,32 +25,44 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     login(formValues);
-    push('/friendslist')
   };
 
   return (
-    <form action="submit" onSubmit={handleSubmit}>
-      <label htmlFor="username">
-        <input
-          name="username"
-          type="text"
-          value={formValues.username}
-          onChange={handleChange}
-          placeholder="username"
-        />
-      </label>
-      <label htmlFor="password">
-        <input
-          name="password"
-          type="password"
-          value={formValues.password}
-          onChange={handleChange}
-          placeholder="password"
-        />
-      </label>
-      <button type="submit">log in</button>
-    </form>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <form action="submit" onSubmit={handleSubmit}>
+          <label htmlFor="username">
+            <input
+              name="username"
+              type="text"
+              value={formValues.username}
+              onChange={handleChange}
+              placeholder="username"
+            />
+          </label>
+          <label htmlFor="password">
+            <input
+              name="password"
+              type="password"
+              value={formValues.password}
+              onChange={handleChange}
+              placeholder="password"
+            />
+          </label>
+          <button type="submit">log in</button>
+        </form>
+      )}
+    </>
   );
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.authReducer.loading,
+  };
+};
+
+// map loading prop to display component before navigation to prevent FOUC
+export default connect(mapStateToProps, { login })(Login);

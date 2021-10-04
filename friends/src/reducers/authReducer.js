@@ -19,11 +19,10 @@ const authReducer = (state = initialState, action) => {
         loading: true,
       };
     case AUTH_SUCCESS:
-      window.localStorage.setItem("token", action.payload);
       return {
         ...state,
-        isAuthenticated: true,
         loading: false,
+        isAuthenticated: true,
       };
     case AUTH_ERROR:
       return {

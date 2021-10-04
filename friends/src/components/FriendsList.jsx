@@ -12,18 +12,12 @@ const FriendsList = (props) => {
   }, [getFriends]);
 
   return (
-    <div>
-      <h2>FriendsList Component</h2>
+    <>
+      {error && <div className="error">{error}</div>}
       {loading && <Loading />}
-      {friends &&
-        friends.map((friend) => (
-          <Friend
-            friend={friend}
-            key={friend.id}
-          />
-        ))}
-      {error && <div>{error}</div>}
-    </div>
+      {friends.length !== 0 &&
+        friends.map((friend) => <Friend friend={friend} key={friend.id} />)}
+    </>
   );
 };
 
